@@ -199,6 +199,15 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/api/debug-env', (req, res) => {
+  res.json({
+    hasWebhookUrl: !!process.env.GOOGLE_SHEET_WEBHOOK_URL,
+    hasZaloGroup: !!process.env.ZALO_GROUP_URL,
+    webhookUrlStart: process.env.GOOGLE_SHEET_WEBHOOK_URL ? process.env.GOOGLE_SHEET_WEBHOOK_URL.substring(0, 30) + '...' : 'MISSING',
+    isVercel: isVercel
+  });
+});
+
 if (!isVercel) {
   app.listen(PORT, () => {
     console.log(`\n==========================================================`);
@@ -209,3 +218,5 @@ if (!isVercel) {
 }
 
 module.exports = app;
+
+
