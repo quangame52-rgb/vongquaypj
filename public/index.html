@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tri Ân Hàng Triệu Khách Hàng Tại Bình Dương - Vòng Quay May Mắn</title>
+  <meta name="description" content="Chương trình Tri Ân Hàng Triệu Khách Hàng Tại Bình Dương - Nhận ngay Voucher Spa Ưu Đãi Cực Khủng và xác nhận qua Zalo.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Canvas background glow elements -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="stars-overlay"></div>
+
+  <div class="main-container">
+    <!-- Header Section matching PJ Clinic Logo -->
+    <header class="app-header">
+      <div class="brand-logo-container">
+        <img src="images/logo.svg" alt="PJ CLINIC BÌNH DƯƠNG" class="brand-logo-img">
+      </div>
+
+      <div class="badge-tag">👑 PJ CLINIC BÌNH DƯƠNG • TRI ÂN ĐẶC BIỆT 👑</div>
+      <h1 class="main-title">
+        TRI ÂN HÀNG TRIỆU <br>
+        <span class="highlight-gold">KHÁCH HÀNG TẠI BÌNH DƯƠNG</span>
+      </h1>
+      <p class="subtitle">VỚI GIÁ CỰC ƯU ĐÃI • ÁP DỤNG TỪ 01/08 ĐẾN 31/08/2026</p>
+      
+      <!-- Guarantee Banner -->
+      <div class="guarantee-banner">
+        <span class="shield-icon">🛡️</span>
+        <span><strong>CAM KẾT ĐẾN ĐẸP</strong> — Không phát sinh chi phí sản phẩm & kỹ thuật trong liệu trình</span>
+      </div>
+    </header>
+
+    <!-- Promotion Highlights Carousel / Cards -->
+    <div class="promo-highlights-grid">
+      <div class="promo-item">
+        <span class="promo-num">1</span>
+        <div class="promo-info">
+          <div class="promo-title">Chăm Sóc Dưỡng Trắng Da 1 Tháng</div>
+          <div class="promo-price"><span class="price-val">259K</span> <span class="old-price">3.500.000đ</span></div>
+          <div class="promo-tag">Tặng kèm 1 Lọ Serum dưỡng trắng</div>
+        </div>
+      </div>
+
+      <div class="promo-item">
+        <span class="promo-num">2</span>
+        <div class="promo-info">
+          <div class="promo-title">Triệt Lông Nách Bảo Hành 1 Năm</div>
+          <div class="promo-price"><span class="price-val">399K</span> <span class="old-price">3.500.000đ</span></div>
+          <div class="promo-tag">Công nghệ cao an toàn tuyệt đối</div>
+        </div>
+      </div>
+
+      <div class="promo-item">
+        <span class="promo-num">3</span>
+        <div class="promo-info">
+          <div class="promo-title">Suất Tắm Trắng Giá Sốc</div>
+          <div class="promo-price"><span class="price-val">19K</span> <span class="old-price">500.000đ</span></div>
+          <div class="promo-tag">Trắng sáng bật tông tức thì</div>
+        </div>
+      </div>
+
+      <div class="promo-item">
+        <span class="promo-num">4</span>
+        <div class="promo-info">
+          <div class="promo-title">Liệu Trình Nám - Mụn Trọn Gói</div>
+          <div class="promo-price"><span class="price-val">2.999K</span> <span class="old-price">10.000.000đ</span></div>
+          <div class="promo-tag">Cam kết đến đẹp, không phát sinh chi phí</div>
+        </div>
+      </div>
+
+      <div class="promo-item promo-special">
+        <span class="promo-num gold-star">⭐</span>
+        <div class="promo-info">
+          <div class="promo-title">GIẢI ĐẶC BIỆT</div>
+          <div class="promo-price"><span class="price-val">500.000đ</span></div>
+          <div class="promo-tag">Voucher quy đổi tiền mặt trực tiếp tại Spa</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="app-content-grid">
+      <!-- Left Side: Registration Form & Live Feed -->
+      <div class="card-glass form-section">
+        <div class="card-header">
+          <div class="icon-circle">🎁</div>
+          <div>
+            <h3>Đăng ký thông tin quay thưởng</h3>
+            <p>Nhận Voucher quy đổi tiền mặt 500.000đ & ưu đãi Zalo</p>
+          </div>
+        </div>
+
+        <form id="spin-form" onsubmit="event.preventDefault();">
+          <div class="form-group">
+            <label for="fullName">Họ và Tên Khách Hàng <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" id="fullName" placeholder="Ví dụ: Nguyễn Thị Mai" required autocomplete="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Số Điện Thoại (Zalo nhận mã) <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <span class="input-icon">📱</span>
+              <input type="tel" id="phone" placeholder="Ví dụ: 0912 345 678" required autocomplete="tel">
+            </div>
+          </div>
+
+          <button type="button" id="btn-spin" class="btn-primary-gold">
+            <span class="btn-shine"></span>
+            <span class="btn-text">🎯 QUAY NGAY - NHẬN VOUCHER 500K</span>
+          </button>
+        </form>
+
+        <!-- Live Winners Ticker -->
+        <div class="live-feed-box">
+          <div class="live-feed-header">
+            <span class="pulse-dot"></span>
+            <span>Khách hàng tại Bình Dương vừa nhận quà</span>
+          </div>
+          <div class="ticker-wrapper">
+            <ul id="winners-ticker" class="ticker-list">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Lucky Wheel Canvas Interactive -->
+      <div class="wheel-section">
+        <div class="wheel-container">
+          <div class="wheel-pointer">🔻</div>
+          <div class="wheel-outer-ring">
+            <canvas id="wheelCanvas" width="480" height="480"></canvas>
+            <div class="wheel-center-btn" id="btn-center-spin">
+              <span>QUAY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Winner Modal Popup -->
+  <div id="winnerModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-sparkles"></div>
+      <div class="modal-icon">🎉</div>
+      <h2 class="modal-title">CHÚC MỪNG BẠN!</h2>
+      <p class="modal-sub">Bạn đã quay trúng phần quà trong Chương trình Tri Ân Bình Dương:</p>
+      
+      <div class="prize-display-box">
+        <div id="modalPrizeName" class="prize-name">Dưỡng Trắng Da 259K</div>
+        <div id="modalPrizeDetail" class="prize-detail">Chăm sóc 1 tháng không giới hạn buổi + Tặng 1 Lọ Serum</div>
+        <div class="voucher-tag">
+          Mã Ưu Đãi: <span id="modalCouponCode" class="code-highlight">SPA-BD-500K</span>
+        </div>
+      </div>
+
+      <div class="cash-voucher-notice">
+        🎟️ <strong>Lưu ý:</strong> Mang theo voucher này đến Spa để được quy đổi sang <strong>tiền mặt trị giá 500.000đ</strong> khi đăng ký liệu trình!
+      </div>
+
+      <div class="zalo-notice-box">
+        <span class="zalo-icon font-bold">👑 THAM GIA NHÓM ZALO VIP SPA:</span>
+        <span id="modalZaloMsg">Tham gia ngay Nhóm Zalo VIP của Spa để chốt lịch nhận quà và cập nhật thêm nhiều chương trình khuyến mãi cực khủng!</span>
+        
+        <div class="zalo-actions-row">
+          <a id="btn-join-zalo-group" href="https://zalo.me/g/pdv89aulcjcossbvgxbt?joinSrc=9" target="_blank" class="btn-zalo-group">
+            👑 VÀO NHÓM ZALO VIP SPA NHẬN THÊM KHUYẾN MÃI
+          </a>
+          <a id="btn-open-zalo-direct" href="#" target="_blank" class="btn-zalo-direct">
+            💬 HOẶC CHAT RIÊNG VỚI ZALO SPA (0339603960)
+          </a>
+        </div>
+      </div>
+
+      <button id="btn-close-modal" class="btn-modal-action">XÁC NHẬN & ĐÓNG</button>
+    </div>
+  </div>
+
+  <!-- Canvas Confetti Container -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- JavaScript Scripts -->
+  <script src="js/wheel.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
