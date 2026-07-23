@@ -11,18 +11,23 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Thư mục dữ liệu
-const DATA_DIR = path.join(__dirname, 'data');
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL;
+const DATA_DIR = isVercel ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
 const PLAYED_PHONES_FILE = path.join(DATA_DIR, 'played_phones.json');
 const CUSTOMERS_JSON_FILE = path.join(DATA_DIR, 'customers.json');
 const CUSTOMERS_CSV_FILE = path.join(DATA_DIR, 'customers.csv');
 
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
 
-if (!fs.existsSync(CUSTOMERS_CSV_FILE)) {
-  const csvHeader = '\uFEFF"Thời Gian","Họ và Tên","Số Điện Thoại","Giải Thưởng","Mã Voucher","Trạng Thái Zalo"\n';
-  fs.writeFileSync(CUSTOMERS_CSV_FILE, csvHeader, 'utf8');
+  if (!fs.existsSync(CUSTOMERS_CSV_FILE)) {
+    const csvHeader = '\uFEFF"Thời Gian","Họ và Tên","Số Điện Thoại","Giải Thưởng","Mã Voucher","Trạng Thái Zalo"\n';
+    fs.writeFileSync(CUSTOMERS_CSV_FILE, csvHeader, 'utf8');
+  }
+} catch (err) {
+  console.error('[INIT ERROR] Không thể tạo file cục bộ (có thể do môi trường serverless chỉ đọc):', err.message);
 }
 
 let playedPhones = new Set();
@@ -194,9 +199,13 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`\n==========================================================`);
-  console.log(`🚀 WEBHOOK SERVER CHẠY TẠI: http://localhost:${PORT}`);
-  console.log(`🔓 CHẾ ĐỘ TEST: Đã mở quay KHÔNG GIỚI HẠN số lần!`);
-  console.log(`==========================================================\n`);
-});
+if (!isVercel) {
+  app.listen(PORT, () => {
+    console.log(`\n==========================================================`);
+    console.log(`🚀 WEBHOOK SERVER CHẠY TẠI: http://localhost:${PORT}`);
+    console.log(`🔓 CHẾ ĐỘ TEST: Đã mở quay KHÔNG GIỚI HẠN số lần!`);
+    console.log(`==========================================================\n`);
+  });
+}
+
+module.exports = app;
