@@ -88,12 +88,20 @@ app.post('/api/webhook/check-phone', (req, res) => {
 
   const formattedPhone = zaloApiService.formatZaloPhone(phone);
   
-  // MẶC ĐỊNH TEST: Cho phép quay thoải mái không giới hạn
+  if (playedPhones.has(formattedPhone)) {
+    return res.json({
+      success: true,
+      alreadySpun: true,
+      formattedPhone,
+      message: 'Số điện thoại này đã tham gia quay thưởng trước đó.'
+    });
+  }
+
   return res.json({
     success: true,
-    alreadySpun: false, // Tắt giới hạn để thử nghiệm
+    alreadySpun: false,
     formattedPhone,
-    message: 'Chế độ Test: Cho phép quay không giới hạn.'
+    message: 'Số điện thoại hợp lệ.'
   });
 });
 
@@ -119,6 +127,13 @@ const handleLuckyWheelWebhook = async (req, res) => {
     }
 
     const formattedPhone = zaloApiService.formatZaloPhone(phone);
+
+    if (playedPhones.has(formattedPhone)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Số điện thoại này đã tham gia quay thưởng rồi.'
+      });
+    }
     const timestamp = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
     const couponCode = prizeCode || generateCouponCode();
 
@@ -212,7 +227,7 @@ if (!isVercel) {
   app.listen(PORT, () => {
     console.log(`\n==========================================================`);
     console.log(`🚀 WEBHOOK SERVER CHẠY TẠI: http://localhost:${PORT}`);
-    console.log(`🔓 CHẾ ĐỘ TEST: Đã mở quay KHÔNG GIỚI HẠN số lần!`);
+    console.log(`🔒 CHẾ ĐỘ THỰC TẾ: Mỗi số điện thoại chỉ được quay 1 lần.`);
     console.log(`==========================================================\n`);
   });
 }
