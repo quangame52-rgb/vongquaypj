@@ -88,20 +88,9 @@ app.post('/api/webhook/check-phone', async (req, res) => {
 
   const formattedPhone = zaloApiService.formatZaloPhone(phone);
   
-  // 1. Kiểm tra bộ nhớ tạm (phòng hờ đánh spam liên tục)
-  if (playedPhones.has(formattedPhone)) {
-    return res.json({
-      success: true,
-      alreadySpun: true,
-      formattedPhone,
-      message: 'Số điện thoại này đã tham gia quay thưởng trước đó.'
-    });
-  }
-
-  // 2. Kiểm tra trực tiếp trên Google Sheets (đảm bảo tuyệt đối)
+  // 1. Kiểm tra trực tiếp trên Google Sheets (đảm bảo tuyệt đối)
   const existsOnSheet = await googleSheetsService.checkPhoneExists(formattedPhone);
   if (existsOnSheet) {
-    playedPhones.add(formattedPhone); // Cache lại vào bộ nhớ
     return res.json({
       success: true,
       alreadySpun: true,
@@ -142,7 +131,7 @@ const handleLuckyWheelWebhook = async (req, res) => {
     const formattedPhone = zaloApiService.formatZaloPhone(phone);
 
     // Kiểm tra trùng lặp lần cuối trước khi quay
-    if (playedPhones.has(formattedPhone) || await googleSheetsService.checkPhoneExists(formattedPhone)) {
+    if (await googleSheetsService.checkPhoneExists(formattedPhone)) {
       return res.status(400).json({
         success: false,
         error: 'Số điện thoại này đã tham gia quay thưởng rồi.'
