@@ -121,7 +121,7 @@ class GoogleSheetsService {
     const webhook = this.webhookUrl || process.env.GOOGLE_SHEET_WEBHOOK_URL;
     if (webhook) {
       try {
-        const response = await axios.get(`${webhook}?phone=${encodeURIComponent(phone)}`, {
+        const response = await axios.get(`${webhook}?action=check_phone&phone=${encodeURIComponent(phone)}`, {
           timeout: 10000
         });
         if (response.data && typeof response.data.exists !== 'undefined') {
@@ -133,6 +133,27 @@ class GoogleSheetsService {
     }
     return false; // Mặc định cho phép nếu lỗi hoặc không dùng webhook
   }
+
+  /**
+   * Lấy danh sách khách hàng trúng thưởng gần đây nhất
+   */
+  async getRecentWinners(limit = 3) {
+    const webhook = this.webhookUrl || process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    if (webhook) {
+      try {
+        const response = await axios.get(`${webhook}?action=get_winners&limit=${limit}`, {
+          timeout: 10000
+        });
+        if (response.data && response.data.success && response.data.winners) {
+          return response.data.winners;
+        }
+      } catch (err) {
+        console.warn('[GoogleSheetsService] Lỗi khi lấy danh sách trúng thưởng:', err.message);
+      }
+    }
+    return [];
+  }
 }
 
 module.exports = new GoogleSheetsService();
+

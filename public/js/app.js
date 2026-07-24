@@ -21,24 +21,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnJoinZaloGroup = document.getElementById('btn-join-zalo-group');
   const tickerList = document.getElementById('winners-ticker');
 
-  // Initial Mock Feed Data
-  const initialWinners = [
-    { name: 'Chị Nguyễn Thị Thanh H.', prize: 'Voucher Tiền Mặt 500K', time: '1 phút trước' },
-    { name: 'Chị Trần Thu T.', prize: 'Dưỡng Trắng Da 259K', time: '3 phút trước' },
-    { name: 'Anh Lê Văn D.', prize: 'Triệt Lông Nách 399K', time: '6 phút trước' },
-    { name: 'Chị Pham Minh K.', prize: 'Tắm Trắng Tri Ân 19K', time: '10 phút trước' }
+  // Danh sách fallback nếu không lấy được từ server
+  let liveWinners = [
+    { name: 'Chị Nguyễn Thị Thanh H.', prize: 'Voucher 500K' },
+    { name: 'Chị Trần Thu T.', prize: 'Dưỡng Trắng Da 259K' },
+    { name: 'Anh Lê Văn D.', prize: 'Triệt Lông Nách 399K' }
   ];
+
+  async function loadLiveWinners() {
+    try {
+      const res = await fetch('/api/winners/recent');
+      const data = await res.json();
+      if (data.success && data.data && data.data.length > 0) {
+        liveWinners = data.data.slice(0, 3).map(w => ({
+          name: w.fullName,
+          prize: w.prizeName
+        }));
+      }
+    } catch (err) {
+      console.warn('Không thể lấy danh sách trúng thưởng:', err);
+    }
+    renderWinnersTicker();
+  }
 
   function renderWinnersTicker() {
     if (!tickerList) return;
-    tickerList.innerHTML = initialWinners.map(w => `
+    tickerList.innerHTML = liveWinners.map(w => `
       <li class="ticker-item">
         <span class="ticker-name">${w.name}</span>
         <span class="ticker-prize">✨ ${w.prize}</span>
       </li>
     `).join('');
   }
-  renderWinnersTicker();
+  
+  // Lấy dữ liệu ngay khi tải trang
+  loadLiveWinners();
+
 
   function isValidPhone(phone) {
     const regex = /(0[3|5|7|8|9])+([0-9]{8})\b/;
@@ -89,12 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const zaloStatus = result.data && result.data.zalo ? result.data.zalo.zaloStatus : '';
           showWinnerModal(fullName, prize.name, prize.detail, couponCode, result.data ? result.data.phone : phone, spaZaloPhone, zaloGroupUrl, zaloStatus);
 
-          initialWinners.unshift({
+          liveWinners.unshift({
             name: fullName.length > 15 ? fullName.substring(0, 15) + '...' : fullName,
             prize: prize.name,
             time: 'Vừa xong'
           });
-          if (initialWinners.length > 5) initialWinners.pop();
+          if (liveWinners.length > 3) liveWinners.pop();
           renderWinnersTicker();
         } else {
           alert('Lỗi Webhook: ' + (result.error || 'Không thể đồng bộ dữ liệu.'));

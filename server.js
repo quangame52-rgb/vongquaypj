@@ -237,6 +237,15 @@ app.get('/api/debug-env', (req, res) => {
   });
 });
 
+app.get('/api/winners/recent', async (req, res) => {
+  try {
+    const winners = await googleSheetsService.getRecentWinners(3);
+    res.json({ success: true, data: winners });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 if (!isVercel) {
   app.listen(PORT, () => {
     console.log(`\n==========================================================`);
