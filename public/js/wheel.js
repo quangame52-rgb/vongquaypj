@@ -17,7 +17,7 @@ class LuckyWheel {
       { id: 2, name: 'Triệt Lông Nách 399K', detail: 'Bảo hành 1 năm (Giá gốc 3.500.000đ)', weight: 20, color: '#06393e', textColor: '#ffffff' },
       { id: 3, name: 'Tắm Trắng Tri Ân 19K', detail: 'Suất Tắm Trắng giá sốc 19.000đ (Giá gốc 500.000đ)', weight: 15, color: '#09636c', textColor: '#ffffff' },
       { id: 4, name: 'Nám - Mụn 2.999K', detail: 'Liệu trình Nám - Mụn trọn gói 2.999K (Giá gốc 10 Triệu - Cam kết đến đẹp)', weight: 30, color: '#b45309', textColor: '#ffffff' },
-      { id: 5, name: 'Voucher Tiền Mặt 500K', detail: '⭐ GIẢI ĐẶC BIỆT: Mang voucher đến Spa quy đổi sang 500.000đ tiền mặt!', weight: 5, color: '#d97706', textColor: '#ffffff' }
+      { id: 5, name: 'Voucher 500K', detail: '⭐ GIẢI ĐẶC BIỆT: Nhận ngay 500k voucher khi đăng ký 1 trong các dịch vụ để sử dụng cho liệu trình khác!', weight: 5, color: '#d97706', textColor: '#ffffff' }
     ];
 
     this.currentAngle = 0; // góc quay hiện tại (radian)
