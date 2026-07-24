@@ -113,6 +113,26 @@ class GoogleSheetsService {
       return { success: true, mode: 'demo', dataRecorded: row };
     }
   }
+
+  /**
+   * Kiểm tra xem số điện thoại đã tồn tại trên Google Sheet chưa thông qua Webhook GET
+   */
+  async checkPhoneExists(phone) {
+    const webhook = this.webhookUrl || process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    if (webhook) {
+      try {
+        const response = await axios.get(`${webhook}?phone=${encodeURIComponent(phone)}`, {
+          timeout: 10000
+        });
+        if (response.data && typeof response.data.exists !== 'undefined') {
+          return response.data.exists;
+        }
+      } catch (err) {
+        console.warn('[GoogleSheetsService] Lỗi khi kiểm tra SĐT qua Webhook:', err.message);
+      }
+    }
+    return false; // Mặc định cho phép nếu lỗi hoặc không dùng webhook
+  }
 }
 
 module.exports = new GoogleSheetsService();
